@@ -28,9 +28,13 @@ export const authOptions = {
 
         const user = await res.json();
 
+        console.log(user);
+
         if (res.ok && user) {
+          console.log('User SUCCESS')
           return user;
         }
+        console.log("USER INVALID")
         return null;
       },
     }),
