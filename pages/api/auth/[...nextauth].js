@@ -1,3 +1,4 @@
+import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -25,6 +26,11 @@ export const authOptions = {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: { "Content-Type": "application/json" },
+        });
+
+
+        axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
+          console.log(res);
         });
 
         const user = await res.json();
