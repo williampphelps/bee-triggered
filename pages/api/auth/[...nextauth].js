@@ -21,7 +21,7 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
 
-        let user = await axios.post(process.env.SERVER + '/api/auth/signin', credentials).then((res) => {
+        let user = axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
           console.log('AXIOS DATA: ', res.data);
           console.log('AXIOS OK: ', res.ok)
           if (res.ok && res.data) {
