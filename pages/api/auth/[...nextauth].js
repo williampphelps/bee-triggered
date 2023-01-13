@@ -20,29 +20,13 @@ export const authOptions = {
         },
       },
       async authorize(credentials, req) {
-        console.log('SEDNING SIGN IN REQUEST: ', process.env.SERVER);
-        console.log(credentials);
-        const res = await fetch(process.env.SERVER + "/api/auth/signin", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
-        });
 
-
-        axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
-          console.log('AXIOS POST: ', res);
-        }).catch((e) => console.log("AXIOS ERROR: ", e)).finally(() => console.log("AXIOS FINALLY:"));
-
-        const user = await res.json();
-
-        console.log(user);
-
-        if (res.ok && user) {
-          console.log('User SUCCESS')
-          return user;
-        }
-        console.log("USER INVALID")
-        return null;
+        return axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
+          if (res.ok && res.data) {
+            return res.data
+          }
+          return null
+        }).catch((e) => {return null});
       },
     }),
   ],
