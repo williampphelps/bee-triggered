@@ -21,12 +21,19 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
 
-        return axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
+        let user = axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
+          console.log('AXIOS DATA: ', res.data);
+          console.log('AXIOS OK: ', res.ok)
           if (res.ok && res.data) {
             return res.data
           }
           return null
-        }).catch((e) => {return null});
+        }).catch((e) => {
+          console.log('AXIOS ERROR: ', e)
+          return null
+        });
+
+        return user;
       },
     }),
   ],
