@@ -6,9 +6,7 @@ dbConnect();
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(method);
-
-  console.log(req.body);
+  console.log('SIGN IN METHOD: ', method);
 
   switch (method) {
     case "GET":

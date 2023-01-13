@@ -33,6 +33,7 @@ export const authOptions = {
           return null
         });
 
+        console.log('USER: ', user);
         return user;
       },
     }),
