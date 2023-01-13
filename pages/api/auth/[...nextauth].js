@@ -20,6 +20,7 @@ export const authOptions = {
       },
       async authorize(credentials, req) {
         console.log('SEDNING SIGN IN REQUEST: ', process.env.SERVER);
+        console.log(credentials);
         const res = await fetch(process.env.SERVER + "/api/auth/signin", {
           method: "POST",
           body: JSON.stringify(credentials),
