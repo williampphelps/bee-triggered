@@ -6,9 +6,6 @@ dbConnect();
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(method);
-
-  console.log(req.body);
 
   switch (method) {
     case "GET":
@@ -16,7 +13,6 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        console.log(req.body);
         User.findOne({ email: req.body.email }, function (findError, user) {
           if (user) {
             bcrypt.compare(
@@ -24,16 +20,13 @@ export default async function handler(req, res) {
               user.password,
               function (compareError, result) {
                 if (result) {
-                  console.log('USER SUCCESS MATCH')
                   res.status(200).json(user);
                 } else {
-                  console.log('USER INCORRECT USERNAME OR PASSWORD')
                   res
                     .status(400)
                     .json({ error: "Incorrect Username or Password" });
                 }
                 if (compareError && !result) {
-                  console.log("SOMETHING WENT WRONG WHILE COMPARING PASSWORDS!")
                   res.status(400).json({
                     message: "Something went wrong while comparing passwords!",
                     error: compareError,
