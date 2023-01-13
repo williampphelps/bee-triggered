@@ -14,11 +14,11 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        console.log(req.body);
-        User.findOne({ email: req.body.email }, function (findError, user) {
+        let body = JSON.parse(req.body);
+        User.findOne({ email: body.email }, function (findError, user) {
           if (user) {
             bcrypt.compare(
-              req.body.pword,
+              body.pword,
               user.password,
               function (compareError, result) {
                 if (result) {
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
           }
         });
       } catch (err) {
-        res.status(400).json({ message: "Something went wrong!" });
+        res.status(400).json({ message: "Something went wrong!", error: err });
       }
       break;
     case "PUT":
