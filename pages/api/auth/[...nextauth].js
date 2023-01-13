@@ -30,8 +30,8 @@ export const authOptions = {
 
 
         axios.post(process.env.SERVER + '/api/auth/signin', JSON.stringify(credentials)).then((res) => {
-          console.log('AXIOS POST: ', res);
-        }).catch((e) => console.log("AXIOS ERROR: ", e)).finally(() => console.log("AXIOS FINALLY:"));
+          console.log(res);
+        });
 
         const user = await res.json();
 
