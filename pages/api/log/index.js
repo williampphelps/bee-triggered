@@ -16,8 +16,11 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const message = JSON.parse(req.body.message);
-        if (message.logtype >= 0) {
+        let message = JSON.parse(req.body.message);
+
+        message.status = 'unread';
+
+        if (message.logtype >= 2000) {
           const newLog = await Log.create(message);
         }
         res.status(200).json({ message: "ok" });

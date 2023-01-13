@@ -11,7 +11,7 @@ const LogSchema = new mongoose.Schema({
   src_host: String,
   src_port: Number,
   utc_time: Date,
-  read_status: String,
+  status: String,
 });
 
 module.exports = mongoose.models.Log || mongoose.model("Log", LogSchema);

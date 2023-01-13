@@ -30,7 +30,7 @@ export default function LogList(props) {
               minute: "2-digit",
             }
           );
-          if (value.logtype >= 0) {
+          if (value.logtype >= 2000 && value.status == "unread") {
             return (
               <div
                 key={index}
@@ -44,7 +44,7 @@ export default function LogList(props) {
                   </div>
                   <div className='flex flex-col gap-1'>
                     <span className="text-lg">
-                      {LogTypes[value.logtype].title} - <TimeAgo datetime={value.local_time_adjusted} />
+                      {LogTypes[value.logtype].title} - <TimeAgo datetime={value.local_time} />
                     </span>
                     <small>from {value.dst_host}</small>
                   </div>

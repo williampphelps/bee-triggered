@@ -14,7 +14,7 @@ export default function LogModal(props) {
   const { data: machineData, loading: machineLoading, error: machineError } = useDataFetcher('/api/machines/' + data?.node_id);
 
 
-  const local_time = new Date(data?.local_time_adjusted).toLocaleString(
+  const local_time = new Date(data?.local_time).toLocaleString(
     "en-US",
     {
         hour: "2-digit",
@@ -24,6 +24,13 @@ export default function LogModal(props) {
         year: 'numeric'
     }
   );
+
+  const markRead = () => {
+    axios.put('/api/log/' + data?._id, { status: 'read' }).then((res) => refetch());
+  }
+  const markUnread = () => {
+    axios.put('/api/log/' + data?._id, { status: 'unread' }).then((res) => refetch());
+  }
 
   if (loading || error || machineError|| machineLoading) {
     return (
@@ -57,11 +64,12 @@ export default function LogModal(props) {
           <div className="static flex flex-col gap-1 h-full overflow-auto">
             <Dialog.Title className="text-3xl">{LogTypes[data?.logtype]?.title} on {machineData?.name}</Dialog.Title>
             <Dialog.Description className="text-sm mb-4">
+              {data?.status == "unread" ? <button className='px-4 py-2 bg-blue-500 rounded-lg' onClick={markRead}>Mark Read</button> : <button className='px-4 py-2 bg-blue-500 rounded-lg' onClick={markUnread}>Mark Unread</button>}
             </Dialog.Description>
             <div className='grid grid-cols-2 gap-2 pb-4'>
                 <div className='bg-neutral-800 rounded-lg p-4'>
                     <b>Time Since:</b><br />
-                    <TimeAgo datetime={data?.local_time_adjusted} />
+                    <TimeAgo datetime={data?.local_time} />
                 </div>
                 <div className='bg-neutral-800 rounded-lg p-4'>
                     <b>Timestamp:</b><br />
