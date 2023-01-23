@@ -4,10 +4,10 @@ const MachineSchema = new mongoose.Schema({
   name: String,
   location: String,
   status: String,
-  last_seen: Date,
-  first_seen: Date,
   company: mongoose.ObjectId,
   user: mongoose.ObjectId,
+  ip_address: String,
+  last_seen: Date,
   mac_prefix: String,
   max_suffix: String,
   config: {

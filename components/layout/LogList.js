@@ -30,7 +30,7 @@ export default function LogList(props) {
               minute: "2-digit",
             }
           );
-          if (value.logtype >= 2000 && value.status == "unread") {
+          if (value.status == "unread") {
             return (
               <div
                 key={index}

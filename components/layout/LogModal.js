@@ -26,7 +26,10 @@ export default function LogModal(props) {
   );
 
   const markRead = () => {
-    axios.put('/api/log/' + data?._id, { status: 'read' }).then((res) => refetch());
+    axios.put('/api/log/' + data?._id, { status: 'read' }).then((res) => {
+      props.setOpen(false);
+      refetch();
+    });
   }
   const markUnread = () => {
     axios.put('/api/log/' + data?._id, { status: 'unread' }).then((res) => refetch());
