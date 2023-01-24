@@ -48,6 +48,7 @@ export default async function handler(req, res) {
         const updatedMachine = await Machine.findByIdAndUpdate(id, JSON.parse(body));
         res.status(200).json(updatedMachine);
       } catch (e) {
+        console.log(e)
         res.status(400).json({ error: e });
       }
       break;

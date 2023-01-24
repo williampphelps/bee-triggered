@@ -48,6 +48,12 @@ export default function MachineModal(props) {
     console.log(machineConfig);
   }
 
+  const updateMachine = () => {
+    axios.put('/api/machines/' + props.machine, {
+      'status': 'need update'
+    }).then(() => refetch());
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,7 +77,9 @@ export default function MachineModal(props) {
           <div className="static flex flex-col gap-1 h-full overflow-hidden">
             <Dialog.Title className="text-3xl">{data?.name} Settings</Dialog.Title>
             <Dialog.Description className="text-sm mb-4">
-              Manage the settings of your {data?._id}
+              Manage the settings of your {data?._id} | {data?.ip_address}
+              <br />
+              <button onClick={() => updateMachine()} className='px-4 py-2 rounded-lg bg-green-700 border border-green-600 hover:bg-green-600'>Update</button>
             </Dialog.Description>
             <form className="static pb-44 flex flex-col gap-4 py-10 text-sm min-h-full w-full overflow-auto" onSubmit={handleSubmit}>
               <div className="flex flex-col border-b border-neutral-800 py-4 gap-4">

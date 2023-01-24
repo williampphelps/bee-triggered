@@ -8,10 +8,11 @@ import LogList from "../components/layout/LogList";
 import useDataFetcher from '../components/layout/DataFetcher';
 
 import { Tab } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MachineSettingsModal from "../components/layout/MachineSettingsModal";
 import LogInfoModal from '../components/layout/LogModal';
 import axios from "axios";
+import TimeAgo from "timeago-react";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,6 +23,13 @@ export default function Home() {
 
   const [logOpen, setLogOpen] = useState(false);
   const [log, setLog] = useState('');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const openModal = (id) => {
     setMachineModalId(id);
@@ -94,7 +102,9 @@ export default function Home() {
                       <FontAwesomeIcon icon={faRobot} className="text-6xl" />
                       <h1 className="text-3xl">{value.name}</h1>
                       <small><b>Status:</b> {value.status}</small>
+                      <small><b>Last Seen: </b> <TimeAgo datetime={value.last_seen} /></small>
                       <small><b>Location:</b> {value.location}</small>
+                      <small><b>IP Address:</b> {value.ip_address}</small>
                     </div>
                   </div>
                 )
