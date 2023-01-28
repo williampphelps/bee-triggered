@@ -9,7 +9,7 @@ const MachineSchema = new mongoose.Schema({
   ip_address: String,
   last_seen: Date,
   mac_prefix: String,
-  max_suffix: String,
+  mac_suffix: String,
   config: {
     "device-node_id": String,
     "ip-ignorelist": [],

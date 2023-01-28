@@ -110,6 +110,27 @@ export default function MachineModal(props) {
                     className="grow rounded-lg py-2 px-4 bg-neutral-800 border border-neutral-700 hover:bg-neutral-900 transition-all duration-500"
                   />
                 </div>
+                <div className="flex flex-row gap-10 items-center justify-between">
+                  <label htmlFor="device.node_id" className="shrink">
+                    Mac Address:
+                  </label>
+                  <input
+                    type="text"
+                    name="mac_prefix"
+                    placeholder={data?.mac_prefix}
+                    value={machineConfig.mac_prefix}
+                    onChange={(e) => handleMachineChange('mac_prefix', e)}
+                    className="grow rounded-lg py-2 px-4 bg-neutral-800 border border-neutral-700 hover:bg-neutral-900 transition-all duration-500"
+                  />
+                  <input
+                    type="text"
+                    name="mac_suffix"
+                    placeholder={data?.mac_suffix}
+                    value={machineConfig.mac_suffix}
+                    onChange={(e) => handleMachineChange('mac_suffix', e)}
+                    className="grow rounded-lg py-2 px-4 bg-neutral-800 border border-neutral-700 hover:bg-neutral-900 transition-all duration-500"
+                  />
+                </div>
               </div>
               <div className="flex flex-col border-b border-neutral-800 py-4 gap-4">
                 <p className="font-bold">Git Settings</p>
