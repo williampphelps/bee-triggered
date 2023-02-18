@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 
 const MachineSchema = new mongoose.Schema({
   name: String,
+  software_version: String,
   location: String,
   status: String,
+  secret_key: String,
   company: mongoose.ObjectId,
   user: mongoose.ObjectId,
   ip_address: String,

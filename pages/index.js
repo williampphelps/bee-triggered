@@ -41,7 +41,7 @@ export default function Home() {
 
   const createMachine = async () => {
     axios.post("/api/machines/", {
-      name: 'beetriggered-' + Math.random().toString(16).substr(2, 4),
+      name: 'bee-' + Math.random().toString(16).substr(2, 4),
       location: "On The Way",
       user: session.user.id,
       status: 'unactivated',

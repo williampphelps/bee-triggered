@@ -20,13 +20,16 @@ export default async function handler(req, res) {
               user.password,
               function (compareError, result) {
                 if (result) {
+                  console.log(user)
                   res.status(200).json(user);
                 } else {
+                  console.log("Password Does Not Mathc!")
                   res
                     .status(400)
                     .json({ error: "Incorrect Username or Password" });
                 }
                 if (compareError && !result) {
+                  console.log("Something went wrong while comparing passwords!")
                   res.status(400).json({
                     message: "Something went wrong while comparing passwords!",
                     error: compareError,
@@ -35,6 +38,7 @@ export default async function handler(req, res) {
               }
             );
           } else {
+            console.log("User Not Found")
             res
               .status(400)
               .json({ message: "Something went wrong!", error: findError });
