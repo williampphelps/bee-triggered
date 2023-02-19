@@ -28,8 +28,6 @@ export default async function handler(req, res) {
   const PUBLIC_KEY = req.headers['x-bee-public']
   const SECRET_KEY = req.headers['x-bee-secret']
 
-  console.log(req.headers)
-
   switch (method) {
     case "GET":
       try {
@@ -70,7 +68,6 @@ export default async function handler(req, res) {
 
           if (message.logtype >= 2000) {
             const newLog = await Log.create(message);
-            console.log('Log Created!')
           }
           res.status(200).json({ message: "ok" });
           return
@@ -79,7 +76,6 @@ export default async function handler(req, res) {
         if (PUBLIC_KEY && SECRET_KEY) {
           const apiKeyValid = await checkApiKeys(PUBLIC_KEY, SECRET_KEY);
           if (apiKeyValid) {
-            console.log(apiKeyValid)
             if (apiKeyValid && apiKeyValid.logs.permission == "create") {
               let messageType = typeof(req.body.message);
 
