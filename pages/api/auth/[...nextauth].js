@@ -42,6 +42,7 @@ export const authOptions = {
           id: user._id,
           full_name: user.full_name,
           email: user.email,
+          type: user.type
         };
       }
       return token;

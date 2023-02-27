@@ -1,4 +1,5 @@
 import User from "../../../utility/models/User";
+import Key from "../../../utility/models/Key";
 import dbConnect from "../../../utility/dbConnect";
 import bcrypt from "bcrypt";
 import { unstable_getServerSession } from 'next-auth/next';
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        if (session) {
+        if (session && session.type == "admin") {
           let password = req.body.pword;
           bcrypt.genSalt(10, function (saltError, salt) {
             if (saltError) {
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
                 full_name: req.body.fname,
                 email: req.body.email,
                 password: hash,
+                type: req.body.type
               };
               const newUser = await User.create(newUserObj);
               res.status(200).json({ message: "User Created!" });
@@ -83,6 +85,7 @@ export default async function handler(req, res) {
                     full_name: req.body.fname,
                     email: req.body.email,
                     password: hash,
+                    type: req.body.type
                   };
                   const newUser = await User.create(newUserObj);
                   res.status(200).json({ message: "User Created!" });
