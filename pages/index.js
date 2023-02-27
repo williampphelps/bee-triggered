@@ -65,14 +65,6 @@ export default function Home() {
                   <h1 className="text-3xl text-glow">Sign In</h1>
                 </div>
               </Link>
-              <Link
-                href="/account/signup"
-                className="card bg-blue-500/75 hover:bg-blue-500 transition-all duration-500 rounded-lg cursor-pointer shadow-md shadow-blue-500/75 hover:shadow-lg hover:shadow-blue-500/75"
-              >
-                <div className="card-content text-center bg-neutral-800 p-24 transition-all duration-500">
-                  <h1 className="text-3xl text-glow">Sign Up</h1>
-                </div>
-              </Link>
             </div>
           </div>
         </div>
@@ -82,6 +74,14 @@ export default function Home() {
     return (
       <CardsContainer>
         <div className="md:p-24 sm:p-10 p-4 flex flex-col gap-10">
+        <Link
+          href="/account/signup"
+          className="card bg-blue-500/75 hover:bg-blue-500 transition-all duration-500 rounded-lg cursor-pointer shadow-md shadow-blue-500/75 hover:shadow-lg hover:shadow-blue-500/75 max-w-full"
+        >
+          <div className="card-content text-center bg-neutral-800 p-4 transition-all duration-500">
+            <h1 className="text-3xl text-glow">Create User</h1>
+          </div>
+        </Link>
           <h1 className="text-6xl text-center">
             Welcome, {session.user.full_name}
           </h1>

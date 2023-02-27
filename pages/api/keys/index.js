@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         }
 
         if (API_KEYGEN_PASS != process.env.API_KEYGEN_PASS) {
-            res.status(401).json({ message: "Access Denied" })
+            res.status(401).json({ message: "Access Denied!" })
             return
         }
 
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
                         permissions: req.body.permissions
                     });
             
-                    res.status(200).json({ public_key: publicKey, secret_key: secretKey, key_pair: newKeyPair });
+                    res.status(200).json({ public_key: publicKey, secret_key: secretKey });
                     return
                 } catch (e) {
                     res.status(500).json({ error: e })

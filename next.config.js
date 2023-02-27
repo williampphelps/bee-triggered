@@ -6,6 +6,7 @@ const nextConfig = {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     SERVER: process.env.SERVER,
+    API_KEYGEN_PASS: process.env.API_KEYGEN_PASS
   },
 };
 
