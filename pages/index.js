@@ -103,7 +103,7 @@ export default function Home() {
                       <h1 className="text-3xl">{value.name}</h1>
                       <small><b>Status:</b> {value.status}</small>
                       <small><b>Version:</b> {value.software_version}</small>
-                      <small><b>Last Seen: </b> <TimeAgo datetime={value.last_seen} /></small>
+                      <small><b>Last Heartbeat: </b> <TimeAgo datetime={value.last_seen} /></small>
                       <small><b>Location:</b> {value.location}</small>
                       <small><b>IP Address:</b> {value.ip_address}</small>
                     </div>
