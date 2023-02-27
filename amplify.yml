@@ -11,6 +11,7 @@ frontend:
         - echo "SERVER=$SERVER" >> .env
         - echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env
         - echo "NEXTAUTH_SECRET=$NEXTAUTH_SECRET" >> .env
+        - echo "API_KEYGEN_PASS=$API_KEYGEN_PASS" >> .env
   artifacts:
     baseDirectory: .next
     files:
