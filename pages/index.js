@@ -39,15 +39,6 @@ export default function Home() {
     setOpen(false);
   };
 
-  const createMachine = async () => {
-    axios.post("/api/machines/", {
-      name: 'bee-' + Math.random().toString(16).substr(2, 4),
-      location: "On The Way",
-      user: session.user.id,
-      status: 'unactivated',
-    }).then((res) => console.log(res)).then(() => refetch());
-  }
-
   if (!session) {
     return (
       <CardsContainer>
@@ -74,27 +65,14 @@ export default function Home() {
     return (
       <CardsContainer>
         <div className="md:p-24 sm:p-10 p-4 flex flex-col gap-10">
-        <Link
-          href="/account/signup"
-          className="card bg-blue-500/75 hover:bg-blue-500 transition-all duration-500 rounded-lg cursor-pointer shadow-md shadow-blue-500/75 hover:shadow-lg hover:shadow-blue-500/75 max-w-full"
-        >
-          <div className="card-content text-center bg-neutral-800 p-4 transition-all duration-500">
-            <h1 className="text-3xl text-glow">Create User</h1>
-          </div>
-        </Link>
           <h1 className="text-6xl text-center">
             Welcome, {session.user.full_name}
           </h1>
+          {(session.user.type == "admin") && <Link href="/account/signup" className="bg-blue-500 text-white hover:bg-blue-400 py-2 px-4 rounded-md"><button>Create A New User</button></Link> }
           <div className="cards-container flex flex-col gap-1 h-64 overflow-auto">
             <LogList setOpen={setLogOpen} setLog={setLog} />
           </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-              <div onClick={createMachine} className="card bg-gradient-to-tl from-green-500 via-blue-500 to-green-500 transition-all duration-1000 rounded-lg shadow-md shadow-blue-500 hover:shadow-lg hover:shadow-blue-500 cursor-pointer">
-                <div className="card-content h-full text-center bg-neutral-800/95 p-12 flex flex-col justify-center gap-4 backdrop-blur-lg filter">
-                  <FontAwesomeIcon icon={faCoins} className="text-6xl" />
-                  <h1 className=" text-3xl">Canary Tokens</h1>
-                </div>
-              </div>
               {data?.map((value, index) => {
                 return (
                   <div key={value._id} onClick={() => openModal(value._id)} className="card bg-gradient-to-tl from-green-500 via-blue-500 to-green-500 transition-all duration-1000 rounded-lg shadow-md shadow-blue-500 hover:shadow-lg hover:shadow-blue-500 cursor-pointer">
