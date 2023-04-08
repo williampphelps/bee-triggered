@@ -257,6 +257,32 @@ export default function MachineModal(props) {
                 </div>
               </div>
               <div className="flex flex-col border-b border-neutral-800 py-4 gap-4">
+                <p className="font-bold">HTTPS Settings</p>
+                <div className="flex sm:flex-row flex-col gap-4 sm:items-center sm:justify-between">
+                  <label htmlFor="https.enabled">HTTPS Enabled:</label>
+                  <Switch
+                    name="https.enabled"
+                    checked={machineConfig.config['https-enabled']}
+                    onChange={(e) => handleConfigChange('https-enabled', e)}
+                    className="flex flex-row ui-not-checked:justify-start ui-checked:justify-end p-1 h-6 w-11 items-center rounded-full ui-checked:bg-blue-500 ui-not-checked:bg-neutral-600"
+                  >
+                    <span className="sr-only">Enable HTTPS</span>
+                    <span className="inline-block h-4 w-4 transform rounded-full bg-neutral-200 transition ui-checked:float-right ui-not-checked:float-left" />
+                  </Switch>
+                </div>
+                <div className="flex sm:flex-row flex-col gap-4 sm:items-center sm:justify-between">
+                  <label htmlFor="https-port">HTTPS Port:</label>
+                  <input
+                    type="number"
+                    name="https-port"
+                    placeholder="80"
+                    value={machineConfig.config['https-port']}
+                    onChange={(e) => handleConfigChange('https-port', e)}
+                    className="rounded-lg py-2 px-4 bg-neutral-800 border border-neutral-700 hover:bg-neutral-900 transition-all duration-500"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col border-b border-neutral-800 py-4 gap-4">
                 <p className="font-bold">HTTP Proxy Settings</p>
                 <div className="flex sm:flex-row flex-col gap-4 sm:items-center sm:justify-between">
                   <label htmlFor="httpproxy.enabled">HTTP Proxy Enabled:</label>
