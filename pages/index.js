@@ -25,7 +25,7 @@ export default function Home() {
   const [logOpen, setLogOpen] = useState(false);
   const [log, setLog] = useState('');
 
-  const [alertSettingsOpen, setAlertSettingsOpen] = useState(true);
+  const [alertSettingsOpen, setAlertSettingsOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
