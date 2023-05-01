@@ -1,10 +1,16 @@
+import { render } from '@react-email/render';
+import LogEmail from '/emails/Log';
 import Log from "/utility/models/Log";
+import LogTypes from '/utility/LogTypes';
 import Key from '/utility/models/Key';
 import bcrypt from 'bcrypt';
 import dbConnect from "/utility/dbConnect";
+import emailer from '/utility/emailer';
+import AlertHandler from '/utility/models/AlertHandler';
 
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '/pages/api/auth/[...nextauth]';
+import axios from 'axios';
 dbConnect();
 
 const checkApiKeys = async (publicKey, secretKey) => {
@@ -57,10 +63,10 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        
+
         if (session) {
 
-          let messageType = typeof(req.body.message);
+          let messageType = typeof (req.body.message);
 
           let message = messageType == "string" ? JSON.parse(req.body.message) : req.body.message;
 
@@ -77,15 +83,83 @@ export default async function handler(req, res) {
           const apiKeyValid = await checkApiKeys(PUBLIC_KEY, SECRET_KEY);
           if (apiKeyValid) {
             if (apiKeyValid && apiKeyValid.logs.permission == "create") {
-              let messageType = typeof(req.body.message);
+              let messageType = typeof (req.body.message);
 
               let message = messageType == "string" ? JSON.parse(req.body.message) : req.body.message;
 
               message.status = 'unread';
 
+              const alerthandlers = await AlertHandler.find({});
+
               if (message.logtype >= 2000) {
                 const newLog = await Log.create(message);
-                console.log('Log Created!')
+
+                const local_time = new Date(message.local_time).toLocaleString(
+                  "en-US",
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                  }
+                );
+
+                for (let i in alerthandlers) {
+                  if (alerthandlers[i].type == "Slack Webhook") {
+                    axios.post(alerthandlers[i].address, { text: LogTypes[message.logtype].title + " Detected!\nSource IP: " + message.src_host + "\nBuzzBox IP: " + message.dst_host });
+                  }
+                  if (alerthandlers[i].type == "Microsoft Teams Webhook") {
+                    const card = {
+                      "type": "AdaptiveCard",
+                      "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                      "version": "1.4",
+                      "body": [
+                        {
+                          "type": "TextBlock",
+                          "text": LogTypes[message.logtype].title + " Detected!",
+                          "wrap": true,
+                          "fontType": "Default",
+                          "size": "Medium",
+                          "weight": "Bolder"
+                        },
+                        {
+                          "type": "TextBlock",
+                          "text": "Source IP: " + message.src_host,
+                          "wrap": true
+                        },
+                        {
+                          "type": "TextBlock",
+                          "text": "BuzzBox IP: " + message.dst_host,
+                          "wrap": true
+                        }
+                      ]
+                    }
+                    axios.post(alerthandlers[i].address, card);
+                  }
+                  if (alerthandlers[i].type == "Email") {
+                    try {
+                      const emailhtml = render(<LogEmail title={LogTypes[message.logtype].title + " Alert"} timestamp={local_time} sourceip={message.src_host} deviceip={message.dst_host} location="See console for device location..." device="See console for the name of the device..." logdata={message.logdata} />);
+                      await emailer.sendMail({
+                        from: 'no-reply@beetriggered.com',
+                        to: alerthandlers[i].address,
+                        subject: LogTypes[message.logtype].title + " Alert at " + local_time,
+                        html: emailhtml
+                      });
+                    } catch (e) {
+                      console.log("Error sending Email...");
+                    }
+
+                  }
+                }
+
+
+                /*
+
+                */
+
+
+                console.log('Log Created!');
               }
               res.status(200).json({ message: "ok" });
               return
